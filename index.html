@@ -1,417 +1,418 @@
 <!DOCTYPE html>
-<html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Генератор случайных чисел и паролей, калькулятор дней">
     <title>Генератор</title>
-<style>
-    body {
-        background-color: #2E3234;
-        color: #fff;
-        font-family: Georgia;
-    }
-
-    .go_top {
-        border: 2px solid #637C63;
-        border-radius: 20px;
-        color: #637C63;
-        display: none;
-        position: fixed;
-        bottom: 15px;
-        left: 5%;
-        font-size: 25px;
-        text-align: center;
-        text-decoration: none;
-        width: 35px;
-        height: 35px;
-    }
-
-    .go_top:hover {
-        color: #fff;
-    }
-
-    @media (max-width: 1150px) {
-        #number_gen .result ,#days_calc .result, #life_days .result {
-            font-size: 150% !important;
-        }
-    }
-
-    @media (max-width: 780px) {
+    <style>
         body {
-            font-size: 80%;
+            background-color: #2E3234;
+            color: #fff;
+            font-family: Georgia;
         }
-        #clock .datetime_info .time_info {
-            width: 135px !important;
-        }
-    }
 
-    @media (max-width: 620px) {
-        body {
-            font-size: 60%;
-        }
-        #clock .datetime_info .time_info {
-            width: 95px !important;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .result {
-            font-size: 80% !important;
-        }
-        #password_gen .result {
-            font-size: 75% !important;
-        }
-        #password_gen input[type="range"] {
-            width: 130px !important;
-        }
         .go_top {
-            font-size: 17px;
-            height: 25px;
-            width: 25px;
+            border: 2px solid #637C63;
+            border-radius: 20px;
+            color: #637C63;
+            display: none;
+            position: fixed;
+            bottom: 15px;
+            left: 5%;
+            font-size: 25px;
+            text-align: center;
+            text-decoration: none;
+            width: 35px;
+            height: 35px;
         }
-    }
 
-    @media (max-width: 300px) {
-        body {
-            font-size: 50%;
+        .go_top:hover {
+            color: #fff;
         }
-    }
 
-    h1 {
-        text-decoration: underline;
-        text-decoration-color: #ffd63f;
-        font-size: 300%;
-        margin: 30px auto;
-        padding: 5px;
-        width: 70%;
-    }
-
-    h1, h2 {
-        text-align: center;
-    }
-
-    h2 {
-        border: 2px solid #ffd63f;
-        border-radius: 15px;
-        margin: 0 auto;
-        padding: 10px;
-        width: 30%;
-    }
-
-    nav {
-        width: 80%;
-        margin: 0 auto;
-    }
-
-    nav ul {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        list-style: none;
-        padding: 0;
-    }
-
-    nav ul li {
-        margin: 0 20px 20px;
-    }
-
-    nav ul li a {
-        background-color: #33383A;
-        border-radius: 15px;
-        color: #ffd63f; 
-        display: inline-block;
-        font-size: 150%;
-        font-weight: bold;
-        text-align: center;
-        text-decoration: none;
-        padding: 10px;
-    }
-
-    nav ul li a:hover {
-        text-decoration: underline;
-    }
-
-    section {
-        background-color: #33383A;
-        border-radius: 15px;
-        margin: 50px auto;
-        min-height: 100px;
-        padding: 15px;
-        width: 90%;
-    }
-
-    svg {
-        width: 30%;
-    }
-
-    .result {
-        color: #ffd63f;
-        font-family: Helvetica;
-        font-size: 300%;
-        margin: 20px 0;
-    }
-
-    #clock {
-        color: #fff;
-        font-family: Helvetica;
-        font-size: 250%;
-        font-style: italic;
-        margin: 25px auto;
-        text-align: center;
-    }
-
-    #clock .datetime_info {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-bottom: 30px;
-    }
-
-    #clock .datetime_info div {
-        margin: 0 5px;
-    }
-
-    #clock .datetime_info .time_info {
-        width: 160px;
-    }
-
-    #number_gen form, #password_gen form, #days_calc form, #life_days form {
-        font-size: 150%;
-        margin: 0 auto;
-        text-align: center;
-        width: 70%;
-    }
-
-    #number_gen form input, #password_gen form input, #days_calc form input, #life_days form input {
-        font-size: 100%;
-    }
-
-    #number_gen form input[type="text"] {
-        background: #637C63;
-        border: 1px solid #637C63;
-        border-radius: 2px;
-        color: #fff;
-        font-style: italic;
-        outline-color: #fff;
-        width: 100px;
-    }
-
-    #number_gen form input[type="submit"],  #password_gen form input[type="submit"],
-    #days_calc form input[type="submit"], #life_days form input[type="submit"]
-    {
-        background-color: transparent;
-        border: 2px solid #fff;
-        border-radius: 10px;
-        color: #fff;
-        outline-color: #fff;
-        padding: 7px 25px;
-        transition: left 0.2s ease-in-out;
-        position: relative;
-        left: 0px;
-    }
-
-    #number_gen form input[type="submit"]:hover, #password_gen form input[type="submit"]:hover,
-    #days_calc form input[type="submit"]:hover, #life_days form input[type="submit"]:hover
-    {
-        background-color: #ffd63f;
-        border-color: #ffd63f;
-        color: #000;
-    }
-
-    #number_gen form label {
-        margin-right: 10px;
-    }
-
-    #number_gen .numbergen_button {
-        max-height: 45px;
-    }
-
-    #password_gen .symbols_sign {
-        margin-bottom: 5px;
-    }
-
-    #password_gen .result {
-        font-size: 100%;
-    }
-
-    #password_gen input[type="range"] {
-        width: 180px;
-    }
-
-    #days_calc input[type="date"] {
-        margin: 5px;
-    }
-
-</style><script>
-    "use strict";
-
-    function showDateInfo() {
-        const dt_arr = dtfru.format(new Date()).split(' ');
-        document.querySelector('#clock .time_info').innerHTML = dt_arr[3];
-        document.querySelector('#clock .timezone_info').innerHTML = '(' + dt_arr[4] + '),';
-        document.querySelector('#clock .date_info').innerHTML = dt_arr[1] + ',';
-        document.querySelector('#clock .day_info').innerHTML = dt_arr[0].replace(',', '');
-        setTimeout(showDateInfo, 100);
-    }
-    
-    function animSubmitButtonReturn(selector) {
-        document.querySelector(selector).style.left = '0px';
-    }
-
-    function animSubmitButton(event) {
-        const button_name = event.target.name;
-        const selector = 'input[name="' + button_name + '"]';
-        document.querySelector(selector).style.left = '10px';
-        setTimeout(animSubmitButtonReturn, 100, selector);
-    }
-
-    function submitNumberGenForm(event) {
-        event.preventDefault();
-        const from_number = +document.querySelector('input[name="from_number"]').value;
-        const to_number = +document.querySelector('input[name="to_number"]').value;
-        let result = '';
-        if (Number.isNaN(from_number) || Number.isNaN(to_number) 
-        || from_number >= to_number || from_number < 0 || to_number > 1000000) {
-            result = 'Некорректный ввод!';
-        }
-        else {
-            result = Math.floor(Math.random() * (to_number + 1 - from_number) + from_number);
-        }
-        document.querySelector('#number_gen .result').innerHTML = result;
-    }
-
-    function submitPasswordGenForm(event) {
-        event.preventDefault();
-        const pass_length = document.querySelector('#password_gen .password_range div').innerHTML;
-        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-        const numbers = '0123456789';
-        const special_chars = '!@#$%^&*()-_+=;:,./?|`[]{}';
-        const pass_arr = [letters, numbers, special_chars];
-        const pass_type = document.querySelector('input[name="password_type"]:checked').value;
-        let result_pass = '';
-        if (pass_type == '1') {
-            while(true) {
-                for (let i = 0; i < pass_length; i++) {
-                    let current_arr = pass_arr[Math.floor(Math.random() * pass_arr.length)];
-                    result_pass += current_arr[Math.floor(Math.random() * current_arr.length)];
-                }
-                if (!(/\d/.test(result_pass)) || !(/[A-Z]/.test(result_pass)) || !(/\W/.test(result_pass))
-                || !(/[a-z]/.test(result_pass))) {
-                    result_pass = '';
-                }
-                else break;
+        @media (max-width: 1150px) {
+            #number_gen .result ,#days_calc .result, #life_days .result {
+                font-size: 150% !important;
             }
         }
-        else if (pass_type == '2') {
-            while (true) {
-                for (let i = 0; i < pass_length; i++) {
-                    let current_arr = pass_arr[Math.floor(Math.random() * (pass_arr.length - 1))];
-                    result_pass += current_arr[Math.floor(Math.random() * current_arr.length)];
-                }
-                if (!(/\d/.test(result_pass)) || !(/[A-Z]/.test(result_pass)) || !(/[a-z]/.test(result_pass))) {
-                    result_pass = '';
-                }
-                else break;
+
+        @media (max-width: 780px) {
+            body {
+                font-size: 80%;
+            }
+            #clock .datetime_info .time_info {
+                width: 135px !important;
             }
         }
-        else if (pass_type == '3') {
-            while(true) {
-                for (let i = 0; i < pass_length; i++) {
-                    let current_arr = letters;
-                    result_pass += current_arr[Math.floor(Math.random() * current_arr.length)];
-                }
-                if (!(/[a-z]/.test(result_pass)) || !(/[A-Z]/.test(result_pass))) {
-                    result_pass = '';
-                }
-                else break;
+
+        @media (max-width: 620px) {
+            body {
+                font-size: 60%;
+            }
+            #clock .datetime_info .time_info {
+                width: 95px !important;
             }
         }
-        document.querySelector('#password_gen .result').innerText = result_pass;
-    }
 
-    function rangeChanged(event) {
-        document.querySelector('#password_gen .password_range div').innerHTML = event.target.value;
-    }
-
-    function submitDaysCalcForm(event) {
-        event.preventDefault();
-        let result = '&nbsp';
-        if (!document.querySelector('input[name="s_date"]').value || !document.querySelector('input[name="f_date"]').value) {
-            result = 'Данные не введены!';
-        }
-        else {        
-            const start = document.querySelector('input[name="s_date"]').value;
-            const finish = document.querySelector('input[name="f_date"]').value;
-            if (start.split('-')[0] > 9999 || finish.split('-')[0] > 9999) result = 'Некорректный ввод!';
-            else {
-                const start_date = new Date(start);
-                const finish_date = new Date(finish);
-                if (start_date.getTime() <= finish_date.getTime()) {
-                    result = Math.round((finish_date.getTime() - start_date.getTime()) / 86400000);
-                }
-                else result = Math.round((start_date.getTime() - finish_date.getTime()) / 86400000);
+        @media (max-width: 480px) {
+            .result {
+                font-size: 80% !important;
+            }
+            #password_gen .result {
+                font-size: 75% !important;
+            }
+            #password_gen input[type="range"] {
+                width: 130px !important;
+            }
+            .go_top {
+                font-size: 17px;
+                height: 25px;
+                width: 25px;
             }
         }
-        document.querySelector('#days_calc .result').innerHTML = result;
-    }
 
-    function submitLifeDaysForm(event) {
-        event.preventDefault();
-        let result = '&nbsp';
-        if (!document.querySelector('input[name="b_date"]').value) result = 'Данные не введены!';
-        else {
-            const start = document.querySelector('input[name="b_date"]').value;
-            const start_date = new Date(start);
-            const finish_date = new Date();
-            if (start_date.getTime() >= finish_date.getTime()) result = 'Некорректный ввод!';
-            else result = Math.floor((finish_date.getTime() - start_date.getTime()) / 86400000);
+        @media (max-width: 300px) {
+            body {
+                font-size: 50%;
+            }
         }
-        if (!Number.isNaN(result)) document.querySelector('#life_days .result').innerHTML = result;
-        else document.querySelector('#life_days .result').innerHTML = 'Некорректный ввод!';
+
+        h1 {
+            text-decoration: underline;
+            text-decoration-color: #ffd63f;
+            font-size: 300%;
+            margin: 30px auto;
+            padding: 5px;
+            width: 70%;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        h2 {
+            border: 2px solid #ffd63f;
+            border-radius: 15px;
+            margin: 0 auto;
+            padding: 10px;
+            width: 30%;
+        }
+
+        nav {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 20px 20px;
+        }
+
+        nav ul li a {
+            background-color: #33383A;
+            border-radius: 15px;
+            color: #ffd63f; 
+            display: inline-block;
+            font-size: 150%;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            background-color: #33383A;
+            border-radius: 15px;
+            margin: 50px auto;
+            min-height: 100px;
+            padding: 15px;
+            width: 90%;
+        }
+
+        svg {
+            width: 30%;
+        }
+
+        .result {
+            color: #ffd63f;
+            font-family: Helvetica;
+            font-size: 300%;
+            margin: 20px 0;
+        }
+
+        #clock {
+            color: #fff;
+            font-family: Helvetica;
+            font-size: 250%;
+            font-style: italic;
+            margin: 25px auto;
+            text-align: center;
+        }
+
+        #clock .datetime_info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        #clock .datetime_info div {
+            margin: 0 5px;
+        }
+
+        #clock .datetime_info .time_info {
+            width: 160px;
+        }
+
+        #number_gen form, #password_gen form, #days_calc form, #life_days form {
+            font-size: 150%;
+            margin: 0 auto;
+            text-align: center;
+            width: 70%;
+        }
+
+        #number_gen form input, #password_gen form input, #days_calc form input, #life_days form input {
+            font-size: 100%;
+        }
+
+        #number_gen form input[type="text"] {
+            background: #637C63;
+            border: 1px solid #637C63;
+            border-radius: 2px;
+            color: #fff;
+            font-style: italic;
+            outline-color: #fff;
+            width: 100px;
+        }
+
+        #number_gen form input[type="submit"],  #password_gen form input[type="submit"],
+        #days_calc form input[type="submit"], #life_days form input[type="submit"]
+        {
+            background-color: transparent;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            color: #fff;
+            outline-color: #fff;
+            padding: 7px 25px;
+            transition: left 0.2s ease-in-out;
+            position: relative;
+            left: 0px;
+        }
+
+        #number_gen form input[type="submit"]:hover, #password_gen form input[type="submit"]:hover,
+        #days_calc form input[type="submit"]:hover, #life_days form input[type="submit"]:hover
+        {
+            background-color: #ffd63f;
+            border-color: #ffd63f;
+            color: #000;
+        }
+
+        #number_gen form label {
+            margin-right: 10px;
+        }
+
+        #number_gen .numbergen_button {
+            max-height: 45px;
+        }
+
+        #password_gen .symbols_sign {
+            margin-bottom: 5px;
+        }
+
+        #password_gen .result {
+            font-size: 100%;
+        }
+
+        #password_gen input[type="range"] {
+            width: 180px;
+        }
+
+        #days_calc input[type="date"] {
+            margin: 5px;
+        }
+
+    </style>
+    <script>
+        "use strict";
+
+        function showDateInfo() {
+            const dt_arr = dtfru.format(new Date()).split(' ');
+            document.querySelector('#clock .time_info').innerHTML = dt_arr[3];
+            document.querySelector('#clock .timezone_info').innerHTML = '(' + dt_arr[4] + '),';
+            document.querySelector('#clock .date_info').innerHTML = dt_arr[1] + ',';
+            document.querySelector('#clock .day_info').innerHTML = dt_arr[0].replace(',', '');
+            setTimeout(showDateInfo, 100);
+        }
         
-    }
+        function animSubmitButtonReturn(selector) {
+            document.querySelector(selector).style.left = '0px';
+        }
 
-    function scrollTracking() {
-        if (window.pageYOffset >= document.documentElement.clientHeight * 0.5) {
-            if (document.querySelector('.go_top').style.display != 'block') {
-                document.querySelector('.go_top').style.display = 'block';
+        function animSubmitButton(event) {
+            const button_name = event.target.name;
+            const selector = 'input[name="' + button_name + '"]';
+            document.querySelector(selector).style.left = '10px';
+            setTimeout(animSubmitButtonReturn, 100, selector);
+        }
+
+        function submitNumberGenForm(event) {
+            event.preventDefault();
+            const from_number = +document.querySelector('input[name="from_number"]').value;
+            const to_number = +document.querySelector('input[name="to_number"]').value;
+            let result = '';
+            if (Number.isNaN(from_number) || Number.isNaN(to_number) 
+            || from_number >= to_number || from_number < 0 || to_number > 1000000) {
+                result = 'Некорректный ввод!';
+            }
+            else {
+                result = Math.floor(Math.random() * (to_number + 1 - from_number) + from_number);
+            }
+            document.querySelector('#number_gen .result').innerHTML = result;
+        }
+
+        function submitPasswordGenForm(event) {
+            event.preventDefault();
+            const pass_length = document.querySelector('#password_gen .password_range div').innerHTML;
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            const numbers = '0123456789';
+            const special_chars = '!@#$%^&*()-_+=;:,./?|`[]{}';
+            const pass_arr = [letters, numbers, special_chars];
+            const pass_type = document.querySelector('input[name="password_type"]:checked').value;
+            let result_pass = '';
+            if (pass_type == '1') {
+                while(true) {
+                    for (let i = 0; i < pass_length; i++) {
+                        let current_arr = pass_arr[Math.floor(Math.random() * pass_arr.length)];
+                        result_pass += current_arr[Math.floor(Math.random() * current_arr.length)];
+                    }
+                    if (!(/\d/.test(result_pass)) || !(/[A-Z]/.test(result_pass)) || !(/\W/.test(result_pass))
+                    || !(/[a-z]/.test(result_pass))) {
+                        result_pass = '';
+                    }
+                    else break;
+                }
+            }
+            else if (pass_type == '2') {
+                while (true) {
+                    for (let i = 0; i < pass_length; i++) {
+                        let current_arr = pass_arr[Math.floor(Math.random() * (pass_arr.length - 1))];
+                        result_pass += current_arr[Math.floor(Math.random() * current_arr.length)];
+                    }
+                    if (!(/\d/.test(result_pass)) || !(/[A-Z]/.test(result_pass)) || !(/[a-z]/.test(result_pass))) {
+                        result_pass = '';
+                    }
+                    else break;
+                }
+            }
+            else if (pass_type == '3') {
+                while(true) {
+                    for (let i = 0; i < pass_length; i++) {
+                        let current_arr = letters;
+                        result_pass += current_arr[Math.floor(Math.random() * current_arr.length)];
+                    }
+                    if (!(/[a-z]/.test(result_pass)) || !(/[A-Z]/.test(result_pass))) {
+                        result_pass = '';
+                    }
+                    else break;
+                }
+            }
+            document.querySelector('#password_gen .result').innerText = result_pass;
+        }
+
+        function rangeChanged(event) {
+            document.querySelector('#password_gen .password_range div').innerHTML = event.target.value;
+        }
+
+        function submitDaysCalcForm(event) {
+            event.preventDefault();
+            let result = '&nbsp';
+            if (!document.querySelector('input[name="s_date"]').value || !document.querySelector('input[name="f_date"]').value) {
+                result = 'Данные не введены!';
+            }
+            else {        
+                const start = document.querySelector('input[name="s_date"]').value;
+                const finish = document.querySelector('input[name="f_date"]').value;
+                if (start.split('-')[0] > 9999 || finish.split('-')[0] > 9999) result = 'Некорректный ввод!';
+                else {
+                    const start_date = new Date(start);
+                    const finish_date = new Date(finish);
+                    if (start_date.getTime() <= finish_date.getTime()) {
+                        result = Math.round((finish_date.getTime() - start_date.getTime()) / 86400000);
+                    }
+                    else result = Math.round((start_date.getTime() - finish_date.getTime()) / 86400000);
+                }
+            }
+            document.querySelector('#days_calc .result').innerHTML = result;
+        }
+
+        function submitLifeDaysForm(event) {
+            event.preventDefault();
+            let result = '&nbsp';
+            if (!document.querySelector('input[name="b_date"]').value) result = 'Данные не введены!';
+            else {
+                const start = document.querySelector('input[name="b_date"]').value;
+                const start_date = new Date(start);
+                const finish_date = new Date();
+                if (start_date.getTime() >= finish_date.getTime()) result = 'Некорректный ввод!';
+                else result = Math.floor((finish_date.getTime() - start_date.getTime()) / 86400000);
+            }
+            if (!Number.isNaN(result)) document.querySelector('#life_days .result').innerHTML = result;
+            else document.querySelector('#life_days .result').innerHTML = 'Некорректный ввод!';
+            
+        }
+
+        function scrollTracking() {
+            if (window.pageYOffset >= document.documentElement.clientHeight * 0.5) {
+                if (document.querySelector('.go_top').style.display != 'block') {
+                    document.querySelector('.go_top').style.display = 'block';
+                }
+            }
+            else {
+                if (document.querySelector('.go_top').style.display != 'none') {
+                    document.querySelector('.go_top').style.display = 'none';
+                }
             }
         }
-        else {
-            if (document.querySelector('.go_top').style.display != 'none') {
-                document.querySelector('.go_top').style.display = 'none';
-            }
-        }
-    }
 
-    const dtfru = new Intl.DateTimeFormat('ru-RU', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        timeZoneName: 'short'
-    });
+        const dtfru = new Intl.DateTimeFormat('ru-RU', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+            timeZoneName: 'short'
+        });
 
-    document.addEventListener('DOMContentLoaded', function(event) { 
-        showDateInfo();
-        window.addEventListener("scroll", scrollTracking);
-        document.querySelector('#password_gen input[type="range"]').value = 20;
-        document.querySelector('#number_gen form').addEventListener('submit', submitNumberGenForm);
-        document.querySelector('#password_gen form').addEventListener('submit', submitPasswordGenForm);
-        document.querySelector('#days_calc form').addEventListener('submit', submitDaysCalcForm);
-        document.querySelector('#life_days form').addEventListener('submit', submitLifeDaysForm);
-        document.querySelector('#number_gen input[type="submit"]').addEventListener('click', animSubmitButton);
-        document.querySelector('#password_gen input[type="submit"]').addEventListener('click', animSubmitButton);
-        document.querySelector('#days_calc input[type="submit"]').addEventListener('click', animSubmitButton);
-        document.querySelector('#life_days input[type="submit"]').addEventListener('click', animSubmitButton);
-        document.querySelector('#password_gen input[type="range"]').addEventListener('change', rangeChanged);
-    });
-</script></head>
-
-
+        document.addEventListener('DOMContentLoaded', function(event) { 
+            showDateInfo();
+            window.addEventListener("scroll", scrollTracking);
+            document.querySelector('#password_gen input[type="range"]').value = 20;
+            document.querySelector('#number_gen form').addEventListener('submit', submitNumberGenForm);
+            document.querySelector('#password_gen form').addEventListener('submit', submitPasswordGenForm);
+            document.querySelector('#days_calc form').addEventListener('submit', submitDaysCalcForm);
+            document.querySelector('#life_days form').addEventListener('submit', submitLifeDaysForm);
+            document.querySelector('#number_gen input[type="submit"]').addEventListener('click', animSubmitButton);
+            document.querySelector('#password_gen input[type="submit"]').addEventListener('click', animSubmitButton);
+            document.querySelector('#days_calc input[type="submit"]').addEventListener('click', animSubmitButton);
+            document.querySelector('#life_days input[type="submit"]').addEventListener('click', animSubmitButton);
+            document.querySelector('#password_gen input[type="range"]').addEventListener('change', rangeChanged);
+        });
+    </script>
+</head>
 <body>
     <header>
         <h1>Я — генератор случайностей и калькулятор неслучайностей!</h1>
@@ -522,7 +523,7 @@
 			</form>
         </section>
     </div>
-    <a href="#" class="go_top">↑</a>
+    <a href="/" class="go_top">↑</a>
     <footer>    
     </footer>
 </body>
